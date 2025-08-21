@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  root: 'frontend',
+  root: 'frontend',        // where index.html lives
   build: {
-    outDir: '../dist',   // dist will be created at project root
-    emptyOutDir: true
+    outDir: '../dist',     // put build output in /dist (outside frontend/)
+    emptyOutDir: true      // clean dist before build
   }
 })
 
