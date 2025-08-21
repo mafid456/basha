@@ -1,14 +1,11 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // tell Vite where to look for index.html
-  root: 'frontend',
-
+  root: '.',              // use current folder as project root
   build: {
-    // output built files into /dist at project root
-    outDir: '../dist',
+    outDir: 'dist',
     emptyOutDir: true
   }
-})
+});
 
 
