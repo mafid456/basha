@@ -1,17 +1,41 @@
 # ---------- Stage 1: build ----------
 FROM node:20-alpine AS builder
+
+# set working directory
 WORKDIR /app
+
+# copy package.json + package-lock.json first (for caching)
 COPY package*.json ./
-RUN npm install   # installs devDependencies (vite, etc.)
+
+# install ALL deps (including devDeps, because we need vite here)
+RUN npm install
+
+# copy all source code
 COPY . .
+
+# build the app (vite build)
 RUN npm run build
+
 
 # ---------- Stage 2: production ----------
 FROM node:20-alpine AS prod
+
 WORKDIR /app
+
+# copy only package.json + lock file
 COPY package*.json ./
-RUN npm install --omit=dev   # prod deps only
+
+# install ONLY production dependencies
+RUN npm install --omit=dev
+
+# copy built files from builder
 COPY --from=builder /app/dist ./dist
+
+# if you have a Node server (like Express), copy server code too
+# COPY --from=builder /app/server ./server
+
+# run the app (adjust to your entry file)
 CMD ["node", "dist/index.js"]
+
 
 
