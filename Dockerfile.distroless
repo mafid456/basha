@@ -11,6 +11,6 @@ RUN npm run build   # uses vite.config.js → builds frontend/index.html into di
 # ---------- Stage 2: Nginx ----------
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
-EXPOSE 80
+EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
 
