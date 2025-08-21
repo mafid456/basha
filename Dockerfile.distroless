@@ -1,20 +1,17 @@
 # ---------- Stage 1: build ----------
+# ---------- Stage 1: build ----------
 FROM node:20-alpine AS builder
 
-# set working directory
 WORKDIR /app
-
-# copy package.json + package-lock.json first (for caching)
 COPY package*.json ./
-
-# install ALL deps (including devDeps, because we need vite here)
 RUN npm install
 
-# copy all source code
 COPY . .
 
-# build the app (vite build)
+# switch to frontend dir before build
+WORKDIR /app/frontend
 RUN npm run build
+
 
 
 # ---------- Stage 2: production ----------
